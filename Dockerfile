@@ -13,14 +13,17 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
  build-essential \
  libfuse-dev libcurl4-openssl-dev \
  libtool \
- libxml2-dev mime-support \
- tar 
+ libxml2-dev mime-support 
+ \
+
+
 RUN mkdir -p /root
 WORKDIR /root
 RUN echo $'#!/bin/sh\n \
            echo $S3User:$S3Secret > /etc/passwd-s3fs\n \
            chmod 600 /etc/passwd-s3fs\n \
            exec s3fs "$@"' > /root/run.sh 
+           
 RUN chmod +x /root/run.sh
 
 ENTRYPOINT ["/root/run.sh"]
