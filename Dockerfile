@@ -31,4 +31,4 @@ curl -s -L ${SCRIPT} | bash' > /root/run.sh
 
            
 RUN chmod +x /root/run.sh
-ENTRYPOINT ["/root/run.sh"]
+#ENTRYPOINT ["/root/run.sh"]
