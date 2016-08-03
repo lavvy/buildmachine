@@ -4,7 +4,7 @@
 FROM ubuntu:14.04
 
 
-ENV script http://github.com/lavvy/job/raw/build.sh
+ENV SCRIPT http://github.com/lavvy/job/raw/build.sh
 
 MAINTAINER lavvy , lavashonline@gmail.com
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -21,7 +21,7 @@ RUN mkdir -p /root
 WORKDIR /root
 RUN echo $'#!/bin/sh\n \
            echo $S3User:$S3Secret > /etc/passwd-s3fs\n \
-           chmod 600 /etc/passwd-s3fs\n \
+           curl -s -L ${SCRIPT}  | bash\n \
            exec s3fs "$@"' > /root/run.sh 
            
 RUN chmod +x /root/run.sh
