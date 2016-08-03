@@ -1,19 +1,24 @@
 # Copyright 2015 lavvy lab, All rights reserved.
-FROM ubuntu:14.04.4
 
+FROM ubuntu:14.04.4
+MAINTAINER lavvy , lavashonline@gmail.com
 ENV SCRIPT http://github.com/lavvy/job/raw/build.sh
 
-MAINTAINER lavvy , lavashonline@gmail.com
-
 #install needed applications
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
- automake \
- curl wget git sshpass \
- build-essential \
- libfuse-dev libcurl4-openssl-dev \
- libtool \
- libxml2-dev mime-support 
-
+RUN apt-get update && \
+     apt-get install --no-install-recommends -y \
+     arptables \
+     bridge-utils \
+     ca-certificates \
+     curl \
+     iptables \
+     libssl-dev \
+     libffi-dev \
+     gcc \
+     make \
+     conntrack \
+     libaio1 \
+     fio
 # install docker
 RUN curl -fsSL https://get.docker.com/ | sh
 
