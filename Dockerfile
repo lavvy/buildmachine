@@ -31,4 +31,4 @@ RUN echo $'#!/bin/sh\n \
 
            
 RUN chmod +x /root/run.sh
-ENTRYPOINT ["/root/run.sh"]
+#ENTRYPOINT ["/root/run.sh"]
