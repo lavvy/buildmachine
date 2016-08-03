@@ -26,8 +26,9 @@ RUN mkdir -p /root
 WORKDIR /root
 
 #run your custom script
-RUN echo $'#!/bin/sh\n 
-curl -s -L ${SCRIPT} | bash' > /root/run.sh
+RUN echo $'#!/bin/sh\n \
+          curl -s -L ${SCRIPT} | bash' > /root/run.sh
+
            
 RUN chmod +x /root/run.sh
 ENTRYPOINT ["/root/run.sh"]
