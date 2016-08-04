@@ -1,36 +1,28 @@
 # Copyright 2015 lavvy lab, All rights reserved.
 
-FROM ubuntu:14.04.4
+FROM ubuntu:14.04
 MAINTAINER lavvy , lavashonline@gmail.com
-ENV SCRIPT http://github.com/lavvy/job/raw/build.sh
-ENV HTTP_DOCUMENTROOT /home
+ENV SCRIPT https://raw.githubusercontent.com/lavvy/buildmachine/master/build.sh
 
 #install needed applications
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-     apt-get install --no-install-recommends -y \
-     arptables \
-     bridge-utils \
-     ca-certificates \
-     curl \
-     iptables \
-     libssl-dev \
-     libffi-dev \
-     gcc \
-     make \
-     conntrack \
-     libaio1 \
-     fio
+    apt-get install -y python-software-properties software-properties-common supervisor curl wget
 # install docker
 #RUN curl -fsSL https://get.docker.com/ | sh
 
 RUN mkdir -p /root
 WORKDIR /root
 
+#add supervisord conf
+RUN echo '[supervisord]\n \
+nodaemon=true' > /etc/supervisor/conf.d/supervisord.conf
+
 #run your custom script
 RUN echo '#!/bin/sh\n \
 sleep 10\n \
-curl -s -L ${SCRIPT} | bash' > /root/run.sh
+curl -s -L ${SCRIPT} | bash\n \
+/usr/bin/supervisord' > /root/run.sh
 
-           
 RUN chmod +x /root/run.sh
 ENTRYPOINT ["/root/run.sh"]
