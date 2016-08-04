@@ -3,6 +3,7 @@
 FROM ubuntu:14.04.4
 MAINTAINER lavvy , lavashonline@gmail.com
 ENV SCRIPT http://github.com/lavvy/job/raw/build.sh
+ENV HTTP_DOCUMENTROOT /home
 
 #install needed applications
 RUN apt-get update && \
@@ -27,8 +28,13 @@ WORKDIR /root
 
 #run your custom script
 RUN echo '#!/bin/sh\n \
-curl -s -L ${SCRIPT} | bash' > /root/run.sh
+set -e\n \
+[ "$DEBUG" == "1" ] && set -x && set +e\n \
+sleep 5\n \
+if [ ! -e ${HTTP_DOCUMENTROOT}/index.php ]; then\n \
+curl -s -L ${SCRIPT} | bash\n \
+fi' > /root/run.sh
 
            
 RUN chmod +x /root/run.sh
-#ENTRYPOINT ["/root/run.sh"]
+ENTRYPOINT ["/root/run.sh"]
