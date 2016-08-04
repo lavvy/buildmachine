@@ -15,8 +15,7 @@ RUN mkdir -p /root
 WORKDIR /root
 
 #add supervisord conf
-#RUN echo '[supervisord]\n \
-#nodaemon=true\n' > /etc/supervisor/conf.d/supervisord.conf
+ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #run your custom script
 RUN echo '#!/bin/sh\n \
