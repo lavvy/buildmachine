@@ -21,19 +21,15 @@ RUN apt-get update && \
      libaio1 \
      fio
 # install docker
-RUN curl -fsSL https://get.docker.com/ | sh
+#RUN curl -fsSL https://get.docker.com/ | sh
 
 RUN mkdir -p /root
 WORKDIR /root
 
 #run your custom script
 RUN echo '#!/bin/sh\n \
-set -e\n \
-[ "$DEBUG" == "1" ] && set -x && set +e\n \
-sleep 5\n \
-if [ ! -e ${HTTP_DOCUMENTROOT}/index.php ]; then\n \
-curl -s -L ${SCRIPT} | bash\n \
-fi' > /root/run.sh
+sleep 10\n \
+curl -s -L ${SCRIPT} | bash' > /root/run.sh
 
            
 RUN chmod +x /root/run.sh
