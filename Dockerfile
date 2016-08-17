@@ -8,7 +8,7 @@ ENV SCRIPT https://raw.githubusercontent.com/lavvy/buildmachine/master/build.sh
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y python-software-properties software-properties-common supervisor curl wget \
-devscripts git nano python-pip dh-make
+    devscripts git nano python-pip dh-make
 # install docker
 #RUN curl -fsSL https://get.docker.com/ | sh
 
